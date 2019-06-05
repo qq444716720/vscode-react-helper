@@ -2,18 +2,22 @@
 import * as vscode from "vscode";
 import {
   toast,
-  createComponent,
+  createIndex,
   createDir,
-  createScss,
+  createLess,
+  createPropType,
+  createService,
+  createSpmConfig,
+  createStore,
   getFileHeaderText,
-  createTestFile
+  createComponentsDir
 } from "./libs";
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     "extension.createReactComponent",
     target => {
-      const fileHeaderText = getFileHeaderText();
+      // const fileHeaderText = getFileHeaderText();
       const { fsPath } = target;
       vscode.window.showInputBox({ prompt: "请输入组件名称" }).then(
         name => {
@@ -23,9 +27,13 @@ export function activate(context: vscode.ExtensionContext) {
           }
           let componentDir = createDir(fsPath, name);
           if (!componentDir) return;
-          createComponent(name, componentDir, fileHeaderText);
-          createScss(name, componentDir, fileHeaderText);
-          createTestFile(name, componentDir, fileHeaderText);
+          createIndex(name, componentDir);
+          createPropType(componentDir);
+          createLess(name, componentDir);
+          createService(componentDir);
+          createSpmConfig(componentDir);
+          createStore(name, componentDir);
+          createComponentsDir(componentDir);
         },
         err => {
           console.log(err);
@@ -36,4 +44,4 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable);
 }
 
-export function deactivate() {}
+export function deactivate() { }
