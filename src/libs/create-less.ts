@@ -8,7 +8,7 @@ import { toast } from './toast';
  */
 export const createLess = (name: string, dirPath: string) => {
   const scssPath = path.resolve(dirPath, 'style.less');
-  const str = `.${name.substr(0, 1).toLocaleLowerCase()}${name.substr(1)}{
+  const str = `#${name.substr(0, 1).toLocaleLowerCase()}${name.substr(1)}{
 
 }
 `;
